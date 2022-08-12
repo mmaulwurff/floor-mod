@@ -10,4 +10,6 @@ OptionMenu fm_Options
   Title "$FM_OPTIONS"
 
   StaticText ""
+  Option "$FM_ENABLED"    , fm_enabled    , OnOff
+  Slider "$FM_DAMAGE_CAP" , fm_damage_cap , 0, 20, 1, 0
 }

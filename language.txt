@@ -4,4 +4,6 @@
 
 [enu default]
 
-FM_OPTIONS = "Floor Mod Options";
+FM_OPTIONS    = "\cx⏚\c- Floor Mod Options";
+FM_ENABLED    = "Enabled";
+FM_DAMAGE_CAP = "Damage cap";
