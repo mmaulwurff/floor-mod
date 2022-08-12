@@ -1,0 +1,13 @@
+// SPDX-FileCopyrightText: 2022 Alexander Kromm <mmaulwurff@gmail.com>
+//
+// SPDX-License-Identifier: CC0-1.0
+
+AddOptionMenu OptionsMenu       { Submenu "$FM_OPTIONS", fm_Options }
+AddOptionMenu OptionsMenuSimple { Submenu "$FM_OPTIONS", fm_Options }
+
+OptionMenu fm_Options
+{
+  Title "$FM_OPTIONS"
+
+  StaticText ""
+}
