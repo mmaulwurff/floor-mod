@@ -5,9 +5,9 @@
 
 FM_OPTIONS = "\cx⏚\c- Floor Mod Options";
 
-FM_ENABLED    = "Damage cap enabled";
-FM_DAMAGE_CAP = "Damage cap";
-FM_LEAK       = "Damage leaks through the radiation suit";
+FM_DAMAGE_LIMIT_ENABLED = "Damage limit enabled";
+FM_DAMAGE_LIMIT         = "Damage limit";
+FM_DAMAGE_LEAK_ENABLED  = "Damage leaks through the radiation suit";
 
 FM_KEYS            = "Floor Mod Keys";
 FM_DETECTOR_HOLD   = "Damage detector (hold)";

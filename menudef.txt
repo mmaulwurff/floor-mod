@@ -8,11 +8,11 @@ OptionMenu fm_Options
 {
   Title "$FM_OPTIONS"
 
-  Option "$FM_ENABLED"    , fm_enabled    , OnOff
-  Slider "$FM_DAMAGE_CAP" , fm_damage_cap , 0, 20, 1, 0
+  Option "$FM_DAMAGE_LIMIT_ENABLED" , fm_damage_limit_enabled, OnOff
+  Slider "$FM_DAMAGE_LIMIT"         , fm_damage_limit, 0, 20, 1, 0
 
   StaticText ""
-  Option "$FM_LEAK", fm_leak, OnOff
+  Option "$FM_DAMAGE_LEAK_ENABLED"  , fm_damage_leak_enabled, OnOff
 
   StaticText ""
   StaticText "$OPTMNU_CONTROLS", 1

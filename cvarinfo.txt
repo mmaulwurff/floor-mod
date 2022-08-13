@@ -1,6 +1,6 @@
 // SPDX-FileCopyrightText: 2022 Alexander Kromm <mmaulwurff@gmail.com>
 // SPDX-License-Identifier: CC0-1.0
 
-server bool fm_enabled    = true;
-server int  fm_damage_cap = 5;
-server bool fm_leak       = false;
+server bool fm_damage_limit_enabled = true;
+server int  fm_damage_limit         = 5;
+server bool fm_damage_leak_enabled  = false;

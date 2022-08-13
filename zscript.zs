@@ -8,8 +8,16 @@ class fm_EventHandler : EventHandler
   override void WorldTick()
   {
     if (!mIsInitialized) initialize();
-    if (fm_enabled != mLastEnabled || fm_damage_cap != mLastDamageCap) setEnabled();
-    if (fm_leak != mLastLeakEnabled) setLeakEnabled();
+
+    if (fm_damage_limit_enabled != mLastDamageLimitEnabled || fm_damage_limit != mLastDamageLimit)
+    {
+      updateDamageLimit();
+    }
+
+    if (fm_damage_leak_enabled != mLastDamageLeakEnabled)
+    {
+      updateDamageLeak();
+    }
 
     mDamageInformation = getDamageInformation();
   }
@@ -57,32 +65,31 @@ class fm_EventHandler : EventHandler
       mDamagingSectorsOriginalLeak.push(aSector.leakyDamage);
     }
 
-    setEnabled();
-    setLeakEnabled();
+    updateDamageLimit();
+    updateDamageLeak();
   }
 
-  private void setEnabled()
+  private void updateDamageLimit()
   {
-    mLastEnabled = fm_enabled;
+    mLastDamageLimitEnabled = fm_damage_limit_enabled;
+    mLastDamageLimit        = fm_damage_limit;
 
-    if (fm_enabled) updateDamageCap();
-    else restore();
+    if (fm_damage_limit_enabled) applyDamageLimit();
+    else restoreDamage();
   }
 
-  private void updateDamageCap()
+  private void applyDamageLimit()
   {
-    mLastDamageCap = fm_damage_cap;
-
     int sectorsCount = mDamagingSectorsIndices.size();
     for (int i = 0; i < sectorsCount; ++i)
     {
       Sector aSector = level.sectors[mDamagingSectorsIndices[i]];
       int originalDamage = mDamagingSectorsOriginalDamage[i];
-      aSector.damageAmount = min(originalDamage, fm_damage_cap);
+      aSector.damageAmount = min(originalDamage, fm_damage_limit);
     }
   }
 
-  private void restore()
+  private void restoreDamage()
   {
     int sectorsCount = mDamagingSectorsIndices.size();
     for (int i = 0; i < sectorsCount; ++i)
@@ -92,15 +99,15 @@ class fm_EventHandler : EventHandler
     }
   }
 
-  private void setLeakEnabled()
+  private void updateDamageLeak()
   {
-    mLastLeakEnabled = fm_leak;
+    mLastDamageLeakEnabled = fm_damage_leak_enabled;
 
-    if (fm_leak) restoreLeak();
-    else disableLeak();
+    if (fm_damage_leak_enabled) restoreDamageLeak();
+    else disableDamageLeak();
   }
 
-  private void restoreLeak()
+  private void restoreDamageLeak()
   {
     int sectorsCount = mDamagingSectorsIndices.size();
     for (int i = 0; i < sectorsCount; ++i)
@@ -110,7 +117,7 @@ class fm_EventHandler : EventHandler
     }
   }
 
-  private void disableLeak()
+  private void disableDamageLeak()
   {
     int sectorsCount = mDamagingSectorsIndices.size();
     for (int i = 0; i < sectorsCount; ++i)
@@ -160,11 +167,11 @@ class fm_EventHandler : EventHandler
   private Array<int> mDamagingSectorsOriginalDamage;
   private Array<int> mDamagingSectorsOriginalLeak;
 
-  private bool mLastEnabled;
-  private int mLastDamageCap;
+  private bool mLastDamageLimitEnabled;
+  private int  mLastDamageLimit;
 
-  private bool mLastLeakEnabled;
+  private bool mLastDamageLeakEnabled;
 
-  private bool mDamageDetectionEnabled;
+  private bool   mDamageDetectionEnabled;
   private string mDamageInformation;
 }
