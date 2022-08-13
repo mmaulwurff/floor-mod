@@ -2,5 +2,5 @@
 // SPDX-License-Identifier: CC0-1.0
 
 server bool fm_enabled    = true;
-server int  fm_damage_cap = 20;
-server bool fm_leak       = true;
+server int  fm_damage_cap = 5;
+server bool fm_leak       = false;
