@@ -9,6 +9,8 @@ This project is a mod to address unwanted damaging floors in GZDoom games.
 
 Sometimes there is too few radiation shielding suits. Sometimes the lava field is too big.
 
+This mod is a part of [m8f's toolbox](https://mmaulwurff.github.io/pages/toolbox).
+
 ## Features
 
 - Option to limit floor damage.
