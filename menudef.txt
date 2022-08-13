@@ -13,6 +13,9 @@ OptionMenu fm_Options
   Slider "$FM_DAMAGE_CAP" , fm_damage_cap , 0, 20, 1, 0
 
   StaticText ""
+  Option "$FM_LEAK", fm_leak, OnOff
+
+  StaticText ""
   StaticText "$OPTMNU_CONTROLS", 1
   StaticTextSwitchable "$CNTRLMNU_SWITCHTEXT1", "$CNTRLMNU_SWITCHTEXT2", ControlMessage
   StaticText ""

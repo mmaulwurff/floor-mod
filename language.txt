@@ -4,9 +4,11 @@
 
 [enu default]
 
-FM_OPTIONS    = "\cx⏚\c- Floor Mod Options";
-FM_ENABLED    = "Enabled";
+FM_OPTIONS = "\cx⏚\c- Floor Mod Options";
+
+FM_ENABLED    = "Damage cap enabled";
 FM_DAMAGE_CAP = "Damage cap";
+FM_LEAK       = "Damage leaks through the radiation suit";
 
 FM_KEYS            = "Floor Mod Keys";
 FM_DETECTOR_HOLD   = "Damage detector (hold)";

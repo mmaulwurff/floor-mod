@@ -10,6 +10,7 @@ class fm_EventHandler : EventHandler
   {
     if (!mIsInitialized) initialize();
     if (fm_enabled != mLastEnabled || fm_damage_cap != mLastDamageCap) setEnabled();
+    if (fm_leak != mLastLeakEnabled) setLeakEnabled();
 
     mDamageInformation = getDamageInformation();
   }
@@ -54,7 +55,11 @@ class fm_EventHandler : EventHandler
 
       mDamagingSectorsIndices.push(i);
       mDamagingSectorsOriginalDamage.push(aSector.damageAmount);
+      mDamagingSectorsOriginalLeak.push(aSector.leakyDamage);
     }
+
+    setEnabled();
+    setLeakEnabled();
   }
 
   private void setEnabled()
@@ -62,7 +67,7 @@ class fm_EventHandler : EventHandler
     mLastEnabled = fm_enabled;
 
     if (fm_enabled) updateDamageCap();
-    else disable();
+    else restore();
   }
 
   private void updateDamageCap()
@@ -78,13 +83,41 @@ class fm_EventHandler : EventHandler
     }
   }
 
-  private void disable()
+  private void restore()
   {
     int sectorsCount = mDamagingSectorsIndices.size();
     for (int i = 0; i < sectorsCount; ++i)
     {
       Sector aSector = level.sectors[mDamagingSectorsIndices[i]];
       aSector.damageAmount = mDamagingSectorsOriginalDamage[i];
+    }
+  }
+
+  private void setLeakEnabled()
+  {
+    mLastLeakEnabled = fm_leak;
+
+    if (fm_leak) restoreLeak();
+    else disableLeak();
+  }
+
+  private void restoreLeak()
+  {
+    int sectorsCount = mDamagingSectorsIndices.size();
+    for (int i = 0; i < sectorsCount; ++i)
+    {
+      Sector aSector = level.sectors[mDamagingSectorsIndices[i]];
+      aSector.leakyDamage = mDamagingSectorsOriginalLeak[i];
+    }
+  }
+
+  private void disableLeak()
+  {
+    int sectorsCount = mDamagingSectorsIndices.size();
+    for (int i = 0; i < sectorsCount; ++i)
+    {
+      Sector aSector = level.sectors[mDamagingSectorsIndices[i]];
+      aSector.leakyDamage = 0;
     }
   }
 
@@ -130,9 +163,12 @@ class fm_EventHandler : EventHandler
 
   private Array<int> mDamagingSectorsIndices;
   private Array<int> mDamagingSectorsOriginalDamage;
+  private Array<int> mDamagingSectorsOriginalLeak;
 
   private bool mLastEnabled;
   private int mLastDamageCap;
+
+  private bool mLastLeakEnabled;
 
   private bool mDamageDetectionEnabled;
   private string mDamageInformation;
