@@ -137,20 +137,16 @@ class fm_EventHandler : EventHandler
     for (int i = 0; i < sectorsCount; ++i)
     {
       Sector aSector = level.sectors[mDamagingSectorsIndices[i]];
-      if (trace.hitSector.index() == aSector.index())
-      {
-        originalDamageAmount = mDamagingSectorsOriginalDamage[i];
-        isOriginalDamageAmount = (aSector.damageAmount == originalDamageAmount);
-      }
+      if (trace.hitSector.index() != aSector.index()) continue;
+
+      originalDamageAmount = mDamagingSectorsOriginalDamage[i];
+      isOriginalDamageAmount = (aSector.damageAmount == originalDamageAmount);
+      break;
     }
 
     return isOriginalDamageAmount ?
-      string.format( StringTable.localize("$FM_DAMAGE")
-                   , trace.hitSector.damageType
-                   , originalDamageAmount
-                   ) :
+      string.format( StringTable.localize("$FM_DAMAGE"), originalDamageAmount) :
       string.format( StringTable.localize("$FM_DAMAGE_ORIGINAL")
-                   , trace.hitSector.damageType
                    , trace.hitSector.damageAmount
                    , originalDamageAmount
                    );

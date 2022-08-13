@@ -12,5 +12,5 @@ FM_LEAK       = "Damage leaks through the radiation suit";
 FM_KEYS            = "Floor Mod Keys";
 FM_DETECTOR_HOLD   = "Damage detector (hold)";
 FM_DETECTOR_TOGGLE = "Damage detector (toggle)";
-FM_DAMAGE_ORIGINAL = "Floor damage type: %s, amount: %d (original: %d).";
-FM_DAMAGE          = "Floor damage type: %s, amount: %d.";
+FM_DAMAGE_ORIGINAL = "Floor damage amount: %d (original: %d).";
+FM_DAMAGE          = "Floor damage amount: %d.";
