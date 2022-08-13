@@ -9,7 +9,13 @@ OptionMenu fm_Options
 {
   Title "$FM_OPTIONS"
 
-  StaticText ""
   Option "$FM_ENABLED"    , fm_enabled    , OnOff
   Slider "$FM_DAMAGE_CAP" , fm_damage_cap , 0, 20, 1, 0
+
+  StaticText ""
+  StaticText "$OPTMNU_CONTROLS", 1
+  StaticTextSwitchable "$CNTRLMNU_SWITCHTEXT1", "$CNTRLMNU_SWITCHTEXT2", ControlMessage
+  StaticText ""
+  Control "$FM_DETECTOR_HOLD"   , "+fm_detector_hold"
+  Control "$FM_DETECTOR_TOGGLE" ,  "fm_detector_toggle"
 }

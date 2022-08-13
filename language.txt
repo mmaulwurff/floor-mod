@@ -7,3 +7,9 @@
 FM_OPTIONS    = "\cx⏚\c- Floor Mod Options";
 FM_ENABLED    = "Enabled";
 FM_DAMAGE_CAP = "Damage cap";
+
+FM_KEYS            = "Floor Mod Keys";
+FM_DETECTOR_HOLD   = "Damage detector (hold)";
+FM_DETECTOR_TOGGLE = "Damage detector (toggle)";
+FM_DAMAGE_ORIGINAL = "Floor damage type: %s, amount: %d (original: %d).";
+FM_DAMAGE          = "Floor damage type: %s, amount: %d.";

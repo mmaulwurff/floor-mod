@@ -10,6 +10,27 @@ class fm_EventHandler : EventHandler
   {
     if (!mIsInitialized) initialize();
     if (fm_enabled != mLastEnabled || fm_damage_cap != mLastDamageCap) setEnabled();
+
+    mDamageInformation = getDamageInformation();
+  }
+
+  override void NetWorkProcess(ConsoleEvent event)
+  {
+    if (event == NULL || event.player != consolePlayer) return;
+
+    if      (event.name == "fm_detector_on" )    mDamageDetectionEnabled = true;
+    else if (event.name == "fm_detector_off")    mDamageDetectionEnabled = false;
+    else if (event.name == "fm_detector_toggle") mDamageDetectionEnabled = !mDamageDetectionEnabled;
+  }
+
+  override void RenderOverlay(RenderEvent event)
+  {
+    if (mDamageInformation.length() == 0) return;
+
+    Font aFont = NewConsoleFont;
+    double x = (Screen.getWidth() - aFont.stringWidth(mDamageInformation)) / 2;
+    double y = Screen.getHeight() * 0.1;
+    Screen.drawText(NewConsoleFont, Font.CR_White, x, y, mDamageInformation);
   }
 
 // private: ////////////////////////////////////////////////////////////////////////////////////////
@@ -61,6 +82,44 @@ class fm_EventHandler : EventHandler
     }
   }
 
+  private string getDamageInformation()
+  {
+    if (!mDamageDetectionEnabled) return "";
+
+    let player = players[consolePlayer].mo;
+    if (player == NULL) return "";
+
+    FLineTraceData trace;
+    player.lineTrace(player.angle, RANGE, player.pitch, offsetz: player.viewHeight, data: trace);
+    if (trace.hitType != FLineTraceData.TRACE_HitFloor || trace.hitSector == NULL) return "";
+
+    int originalDamageAmount = 0;
+    bool isOriginalDamageAmount = true;
+    int sectorsCount = mDamagingSectorsIndices.size();
+    for (int i = 0; i < sectorsCount; ++i)
+    {
+      Sector aSector = level.sectors[mDamagingSectorsIndices[i]];
+      if (trace.hitSector.index() == aSector.index())
+      {
+        originalDamageAmount = mDamagingSectorsOriginalDamage[i];
+        isOriginalDamageAmount = (aSector.damageAmount == originalDamageAmount);
+      }
+    }
+
+    return isOriginalDamageAmount ?
+      string.format( StringTable.localize("$FM_DAMAGE")
+                   , trace.hitSector.damageType
+                   , originalDamageAmount
+                   ) :
+      string.format( StringTable.localize("$FM_DAMAGE_ORIGINAL")
+                   , trace.hitSector.damageType
+                   , trace.hitSector.damageAmount
+                   , originalDamageAmount
+                   );
+  }
+
+  const RANGE = 1024.0;
+
   private bool mIsInitialized;
 
   private Array<int> mDamagingSectorsIndices;
@@ -68,4 +127,7 @@ class fm_EventHandler : EventHandler
 
   private bool mLastEnabled;
   private int mLastDamageCap;
+
+  private bool mDamageDetectionEnabled;
+  private string mDamageInformation;
 }

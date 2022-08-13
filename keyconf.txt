@@ -1,0 +1,11 @@
+// SPDX-FileCopyrightText: 2022 Alexander Kromm <mmaulwurff@gmail.com>
+//
+// SPDX-License-Identifier: CC0-1.0
+
+Alias +fm_detector_hold   "netevent fm_detector_on"
+Alias -fm_detector_hold   "netevent fm_detector_off"
+Alias  fm_detector_toggle "netevent fm_detector_toggle"
+
+AddKeySection "$FM_KEYS" fm_Keys
+AddMenuKey "$FM_DETECTOR_HOLD"   +fm_detector_hold
+AddMenuKey "$FM_DETECTOR_TOGGLE"  fm_detector_toggle
