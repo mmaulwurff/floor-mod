@@ -35,12 +35,17 @@ class fm_EventHandler : EventHandler
   {
     if (mDamageInformation.length() == 0) return;
 
-    Font aFont = NewConsoleFont;
-    let scaleVector = StatusBar.getHudScale();
+    Font   aFont = NewConsoleFont;
+    let    scaleVector = StatusBar.getHudScale();
     double scale = scaleVector.x;
-    double x = int(0.5 * (Screen.getWidth()  - scale * aFont.stringWidth(mDamageInformation)));
-    double y = int(0.1 * (Screen.getHeight() - scale * aFont.getHeight()));
+    double stringWidth  = scale * aFont.stringWidth(mDamageInformation);
+    double stringHeight = scale * aFont.getHeight();
+    double x            = int(0.5 * (Screen.getWidth()  - stringWidth));
+    double y            = int(0.1 * (Screen.getHeight() - stringHeight));
+    double border       = int(stringHeight / 4 * scale);
+    double border2      = border * 2;
 
+    Screen.dim("000000", 0.5, x - border, y - border, stringWidth + border2, stringHeight + border2);
     Screen.drawText( NewConsoleFont, Font.CR_White, x, y, mDamageInformation
                    , DTA_ScaleX, scale
                    , DTA_ScaleY, scale
